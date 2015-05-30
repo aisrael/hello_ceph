@@ -18,6 +18,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box.
   config.vm.box = 'ubuntu/trusty64'
+  config.ssh.insert_key = false
 
   config.vm.define CEPH_VM_NAME do |ceph|
 
