@@ -91,6 +91,11 @@ Vagrant.configure(2) do |config|
 
       ansible.limit = 'all'
     end
+
+    config.vm.provision 'ansible' do |ansible|
+      ansible.playbook = 'playbook.yml'
+    end
+
   end
 
   # If true, then any SSH connections made will enable agent forwarding.
