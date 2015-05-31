@@ -1,5 +1,5 @@
 ---
-- hosts: hello-ceph
+- hosts: ceph
   vars:
     locale: en_US.utf8
     timezone: Asia/Manila
@@ -12,7 +12,7 @@
   - lineinfile: dest=/root/.profile regexp='^mesg n$' line='tty -s && mesg n'
     sudo: yes
 
-  - name: set locale to $locale
+  - name: set locale to {{locale}}
     command: /usr/sbin/update-locale LANG={{locale}} LC_ALL={{locale}}
     sudo: yes
     when: ansible_env.LANG != "{{locale}}"

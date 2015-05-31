@@ -5,7 +5,7 @@
 SUBNET='192.168.42'
 
 # The VM name of the singular ceph VM
-CEPH_VM_NAME = 'hello-ceph'
+CEPH_VM_NAME = 'ceph'
 
 # The IP address of the ceph VM
 CEPH_VM_IP = 100
@@ -84,6 +84,11 @@ Vagrant.configure(2) do |config|
         # Change to > 1 if you have more than one OSD
         pool_default_size: 1,
 
+        # See http://ceph.com/docs/master/rados/configuration/osd-config-ref/
+        journal_size: 48,
+
+        monitor_interface: 'eth1',
+
         # Has to reflect the same IP block in Vagrantfile
         cluster_network: "#{SUBNET}.0/24",
         public_network: "#{SUBNET}.0/24"
@@ -92,7 +97,7 @@ Vagrant.configure(2) do |config|
       ansible.limit = 'all'
     end
 
-    config.vm.provision 'ansible' do |ansible|
+    ceph.vm.provision 'ansible' do |ansible|
       ansible.playbook = 'playbook.yml'
     end
 
