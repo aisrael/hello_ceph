@@ -103,12 +103,9 @@ int main (int argc, const char **argv)
 
     /* Next, read data using rados_aio_read. */
     int BUF_LEN = 100;
-    char read_res[BUF_LEN];
-    // First, we need to zero out the buffer (since we're only reading & writing actual bytes)
-    for (int i = 0; i < 100; ++i) {
-        read_res[i] = 0;
-    }
-    err = rados_aio_read(io, "hw", comp, read_res, BUF_LEN, 0);
+    /* Allocate a zeroed out the buffer (C99) */
+    char read_res[100] = {0};
+    err = rados_aio_read(io, "hw", comp, read_res, 100, 0);
     /* Wait for the operation to complete */
     rados_aio_wait_for_complete(comp);
 
