@@ -62,7 +62,10 @@ Vagrant.configure(2) do |config|
       }
 
       ansible.extra_vars = {
-        ceph_stable: true, # use ceph stable branch
+        ceph_stable: false, # DON'T use ceph stable branch
+
+        ceph_dev: true, # use ceph development branch
+        ceph_dev_branch: 'v0.89',
 
         restapi: false, # disable restapi configuration in ceph.conf
 
@@ -75,11 +78,14 @@ Vagrant.configure(2) do |config|
         # In a production deployment, these should be secret
         fsid: '4a158d27-f750-41d5-9e7f-26ce4c9d2d45',
         monitor_secret: 'AQAWqilTCDh7CBAAawXt6kyTgLFCxSvJhTEmuw==',
-        radosgw: 'false',
-        mds: 'false',
+        radosgw: false,
+        mds: false,
+
+        journal_collocation: true,
+        devices: ['/dev/sdb'],
 
         # Needed for single node
-        common_single_host_mode: 'True',
+        common_single_host_mode: true,
 
         # Change to > 1 if you have more than one OSD
         pool_default_size: 1,
